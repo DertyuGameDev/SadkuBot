@@ -1,0 +1,174 @@
+ul {
+    text-align: center;
+    border-color: aliceblue;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+#site {
+    height: 85%;
+    text-align: center;
+    align-items: center;
+    /* display: none; */
+}
+
+#app {
+    height: 85%;
+    display: none;
+}
+
+#yt {
+    height: 85%;
+    display: none;
+}
+
+#new-task {
+    width: 80%;
+    height: 12em;
+    background-color: rgba(114, 113, 112, 0.082);
+    margin-left: 10%;
+    padding-top: 2%;
+}
+
+#title-form {
+    float: left;
+    font-family: "Source Code Pro", monospace;
+    font-optical-sizing: auto;
+    color: wheat;
+    font-weight: 500;
+    width: 50%;
+    margin: 0;
+    padding: 0;
+    font-size: 150%;
+}
+
+#addtask {
+    margin-top: 5%;
+    width: 70%;
+    height: 1em;
+    color: rgb(131, 131, 131);
+    font-size: 3.1em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: rgba(114, 113, 112, 0.082);
+    border-style: none;
+}
+
+#files {
+    opacity: 0;
+    float: right;
+}
+
+#text-main {
+    font-family: "Source Code Pro", monospace;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    color: rgb(194, 194, 194);
+    text-align: center;
+    font-size: 2rem;
+    margin-left: 1;
+    /*
+    animation-name: text;
+    animation-duration: 1s;
+    animation-timing-function:cubic-bezier();
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+    animation-play-state: running;
+    animation-fill-mode: forwards;
+    */
+}
+
+.center-label {
+    font-family: "Source Code Pro", monospace;
+    color: wheat;
+    margin-top: 5%;
+    width: 100%;
+    padding: 0;
+    font-size: 150%;
+}
+
+.center-text-area {
+    width: 90%;
+    height: 33px;
+    border: none;
+    outline: none;
+    text-align: center;
+    background-color: rgb(116, 116, 116);
+    font-size: 100%;
+}
+
+.string {
+    height: 15%;
+}
+
+.invisible {
+    display: none;
+}
+
+.choose-command {
+    width: 50%;
+    text-align: center;
+    float: right;
+    font-family: "Source Code Pro", monospace;
+    font-size: 150%;
+    border-style: hidden;
+    background-image: linear-gradient(to right, rgba(114, 113, 112, 1), rgb(63, 63, 63));
+    border: 0;
+    color: white;
+    background-color: grey
+}
+
+.minus-button {
+    width: 10%;
+    height: 35px;
+    float: left;
+    border-style: hidden;
+    font-size: 200%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    background-color: rgb(161, 161, 161);
+    color: red;
+}
+
+.list-item {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 35px;
+    margin-top: 10px;
+}
+
+.text-area {
+    width: 60%;
+    height: 33px;
+    float: left;
+    border: none;
+    outline: none;
+    text-align: center;
+    background-color: rgb(184, 184, 184);
+    font-size: 150%;
+}
+
+.name-command {
+    float: left;
+    height: 35px;
+    width: 30%;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 35px;
+    color: white;
+    background-color: rgb(116, 116, 116);
+    font-size: 4vw;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.body {
+    background: #0F2027;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2e3435, #2a3235, #202425);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}

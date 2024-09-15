@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Main Page</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+
+<body class="body">
+    <div style="text-align: center;">
+        <h1 id="text-main">Sadku bot</h1>
+        <div id="new-task">
+            <div class="string">
+                <p id="title-form">Choose command:</p>
+                <select class="choose-command">
+                    <option value="0">Open site</option>
+                    <option value="1">Open app</option>
+                    <option value="2">Thanks</option>
+                    <option value="3">Close app</option>
+                    <option value="4">Search in internet</option>
+                    <option value="5">Search in youtube</option>
+                </select>
+            </div>
+
+            <div id="site">
+                <p class="center-label">Url site:</p>
+                <input class="center-text-area" type="text" onchange="changeChecker(this)">
+            </div>
+
+            <div id="app">
+
+            </div>
+
+            <div id="yt">
+
+            </div>
+        </div>
+        <button id="addtask" onclick="addNewCommand()">+</button>
+        <ul>
+            <div class="list-item">
+                <p class="invisible"></p>
+                <input class="text-area" type="text">
+                <p class="name-command">Open app</p>
+                <button class="minus-button" onclick="remove(this)">-</button>
+            </div>
+
+        </ul>
+    </div>
+
+    <script type="text/javascript" src="eel.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+</body>
+
+</html>
