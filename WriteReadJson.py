@@ -1,13 +1,27 @@
 import json
 import os
+import string
+from ctypes import windll
 
 
-def writeall(start_dir):
+def get_drives():
+    drives = []
+    bitmask = windll.kernel32.GetLogicalDrives()
+    for letter in string.ascii_uppercase:
+        if bitmask & 1:
+            drives.append(letter)
+        bitmask >>= 1
+    return drives
+
+
+def writeall():
     d = dict()
-    for dirpath, dirnames, filenames in os.walk(start_dir):
-        for i in filenames:
-            if '.exe' in i:
-                a = str(os.path.join(dirpath, i)).split("\\")[-1].split('.')[0].lower()
+    for k in get_drives():
+        for dirpath, dirnames, filenames in os.walk(rf'{k}:\\'):
+            for i in filenames:
+                a = str(os.path.join(dirpath, i)).split("\\")[-1]
+                if a in d.keys():
+                    continue
                 d[a] = str(os.path.join(dirpath, i))
     d = json.dumps(d)
     d = json.loads(str(d))
@@ -21,7 +35,15 @@ def read():
 
 
 def search():
-    if not os.path.exists('Jsons/result.json'):
-        print('Подождите, пока мы загрузим все необходимое!')
-        writeall(r'C:\\')
-        print('Все готово!')
+    print('Подождите, пока мы загрузим все необходимое!')
+    writeall()
+    print('Все готово!')
+
+
+def search_file(j):
+    print(j)
+    print(j)
+    h = read()
+    for i in h.keys():
+        if i == j:
+            return h[i]

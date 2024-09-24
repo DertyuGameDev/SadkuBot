@@ -10,13 +10,21 @@ from SoundPlayer import play_sound
 
 
 class Command:
-    def __init__(self, command, *word, id):
+    def __init__(self, command, *word, id, comN, dictionary):
         self.word = [*word]
         self.command = command
-        self.id = id;
+        self.id = id
+        self.comN = comN
+        self.dictionary = dictionary
 
     def getCommand(self):
         return self.word
+
+    def setComN(self, n):
+        self.comN = n
+
+    def getComN(self):
+        return self.comN
 
     def setWords(self, words):
         self.word = words
@@ -55,10 +63,16 @@ class CommandManager:
             return self.commands[-1].getID()
         return -1
 
+    def lastN(self):
+        if self.commands:
+            return self.commands[-1].comN
+        return -1
+
     def __str__(self):
         for i in self.commands:
             print(i.getCommand(), i.id, '\n')
         return ''
+
 
 def fillCommandManager(ComMan, commands):
     o = 0

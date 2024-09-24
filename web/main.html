@@ -8,6 +8,31 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="stylesheet.css">
+    <style>
+        #file-input {
+            cursor: pointer;
+            outline: none;
+            font-size: 14px;
+            color: rgb(233, 219, 183);
+            text-align: center;
+            border-radius: 4px;
+            background-color: #a0a0a028;
+            height: 100%;
+            padding: 10px 15px;
+            box-sizing: border-box;
+            border: none;
+            margin: 0;
+        }
+        
+        #inp {
+            position: absolute;
+            z-index: -1;
+            opacity: 0;
+            display: block;
+            width: 0;
+            height: 0;
+        }
+    </style>
 </head>
 
 <body class="body">
@@ -16,7 +41,7 @@
         <div id="new-task">
             <div class="string">
                 <p id="title-form">Choose command:</p>
-                <select class="choose-command">
+                <select class="choose-command" onchange="changeForm(this)">
                     <option value="0">Open site</option>
                     <option value="1">Open app</option>
                     <option value="2">Thanks</option>
@@ -32,22 +57,30 @@
             </div>
 
             <div id="app">
+                <p class="center-label">Your app:</p>
+                <label id="file-input">
+                    <input type="file" name="file" id="inp" onchange="changeName(this)">		
+                    <span>Выберите файл</span>
+              </label>
+            </div>
 
+            <div id="thanks">
+                <p class="center-label">Thanks!</p>
+            </div>
+
+            <div id="internet">
+                <p class="center-label">Soon:</p>
             </div>
 
             <div id="yt">
-
+                <p class="center-label">Soon:</p>
             </div>
         </div>
-        <button id="addtask" onclick="addNewCommand()">+</button>
+        <div>
+            <button id="addtask" onclick="addNewCommand()">+</button>
+            <button id="save">💾</button>
+        </div>
         <ul>
-            <div class="list-item">
-                <p class="invisible"></p>
-                <input class="text-area" type="text">
-                <p class="name-command">Open app</p>
-                <button class="minus-button" onclick="remove(this)">-</button>
-            </div>
-
         </ul>
     </div>
 

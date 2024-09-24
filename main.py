@@ -2,6 +2,7 @@
 # -*- coding: utf8 -*-
 import asyncio
 import os
+import json
 import sys
 import threading
 import playsound3
@@ -17,7 +18,6 @@ from Command import CommandManager, Command, thanks, browser, openApp, closeApp,
 import WriteReadJson
 import SpeechListen
 
-WriteReadJson.search()
 text = ''
 # commands = {
 #     lambda x: browser('https://www.youtube.com/'): ['запусти youtube', 'включи youtube', 'открой youtube'],
@@ -49,10 +49,12 @@ print('ok')
 @eel.expose
 def setCommandWords(words, id):
     print(words)
+    print(id)
     for i in c.commands:
         i: Command
         if i.getID() == int(id):
             i.setWords(words.split(', '))
+
 
 @eel.expose
 def lastID():
@@ -60,18 +62,79 @@ def lastID():
 
 
 @eel.expose
-def removeByID(id):
+def lastN():
+    return c.lastN()
+
+
+def setupJson():
+    d = getJson('commands.json')
     for i in c.commands:
-        if i.id == id:
-            c.commands.remove(i)
-            return None
+        if i.comN == 0:
+            pass
 
 
 @eel.expose
-def add_task(num, url):
-    if num == 0:
-        c.addCommand(Command(lambda x: browser(url), id=c.lastID() + 1))
-        return True
+def removeByID(id):
+    for i in c.commands:
+        if i.id == int(id):
+            c.commands.remove(i)
+            break
+    for k in range(len(c.commands)):
+        c.commands[k].id = k
+    setJson('commands.json')
+    return None
+
+
+@eel.expose
+def getJson(name):
+    with open(f'Jsons/{name}', encoding='utf-8') as f:
+        return json.loads(f.read())
+
+
+comList = {
+    0: 'browser',
+    1: 'openapp'
+}
+
+
+def setJson(name):
+    d = {}
+    for k in list(sorted(c.commands, key=lambda x: x.id)):
+        d[str(k.id)] = {
+            'commands': comList[k.comN]
+        }
+        for j in k.dictionary.keys():
+            d[str(k.id)][j] = k.dictionary[j]
+        d[str(k.id)]['words'] = k.getCommand()
+    with open(f'Jsons/{name}', '+w') as f:
+        json.dump(d, f)
+
+
+@eel.expose
+def setupCommands():
+    d = getJson('commands.json')
+    c.commands = []
+    for i in d.keys():
+        if d[i]['commands'] == 'browser':
+            u = d[i]['url']
+            c.addCommand(
+                Command(lambda x: browser(u), *d[i]['words'], id=c.lastID() + 1,
+                        comN=0, dictionary={'url': u}))
+        elif d[i]['commands'] == 'openapp':
+            c.addCommand(
+                Command(lambda x: openApp(WriteReadJson.search_file(d[i]['path'])), *d[i]['words'], id=c.lastID() + 1,
+                        comN=1, dictionary={'path': d[i]['path']}))
+
+
+@eel.expose
+def add_task(d):
+    if d['comand'] == 0:
+        c.addCommand(Command(lambda x: browser(d['url']), id=c.lastID() + 1, comN=0, dictionary={'url': d['url']}))
+    elif d['comand'] == 1:
+        c.addCommand(Command(lambda x: openApp(WriteReadJson.search_file(d['path'])), id=c.lastID() + 1, comN=1,
+                             dictionary={'path': d['path']}))
+    setJson('commands.json')
+    return True
 
 
 @eel.expose
@@ -150,5 +213,6 @@ def quit():
 
 
 if __name__ == "__main__":
+    setupCommands()
     eel.init('web')
     eel.start("main.html", size=(700, 700))

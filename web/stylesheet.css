@@ -5,22 +5,55 @@ ul {
     padding-left: 0;
 }
 
+#save {
+    margin-top: 5%;
+    width: 30%;
+    float: right;
+    height: 1.54em;
+    color: rgb(131, 131, 131);
+    font-size: 2em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: rgba(114, 113, 112, 0.856);
+    border-style: dashed;
+}
+
 #site {
     height: 85%;
     text-align: center;
     align-items: center;
-    /* display: none; */
+    display: block;
 }
 
 #app {
     height: 85%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
     display: none;
 }
 
 #yt {
     height: 85%;
+    text-align: center;
+    align-items: center;
     display: none;
 }
+
+#internet {
+    height: 85%;
+    text-align: center;
+    align-items: center;
+    display: none;
+}
+
+#thanks {
+    height: 85%;
+    text-align: center;
+    align-items: center;
+    display: none;
+}
+
+#file-input {}
 
 #new-task {
     width: 80%;
@@ -40,6 +73,12 @@ ul {
     margin: 0;
     padding: 0;
     font-size: 150%;
+    white-space: nowrap;
+    /* Текст не переносится */
+    overflow: hidden;
+    /* Обрезаем всё за пределами блока */
+    text-overflow: ellipsis;
+    /* Добавляем многоточие */
 }
 
 #addtask {
@@ -160,8 +199,14 @@ ul {
     line-height: 35px;
     color: white;
     background-color: rgb(116, 116, 116);
-    font-size: 4vw;
+    font-size: 150%;
     font-family: 'Courier New', Courier, monospace;
+    white-space: nowrap;
+    /* Текст не переносится */
+    overflow: hidden;
+    /* Обрезаем всё за пределами блока */
+    text-overflow: ellipsis;
+    /* Добавляем многоточие */
 }
 
 .body {

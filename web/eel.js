@@ -1,14 +1,15 @@
 eel = {
     _host: window.location.origin,
 
-    set_host: function (hostname) {
+    set_host: function(hostname) {
         eel._host = hostname
     },
 
     expose: function(f, name) {
-        if(name === undefined){
+        if (name === undefined) {
             name = f.toString();
-            let i = 'function '.length, j = name.indexOf('(');
+            let i = 'function '.length,
+                j = name.indexOf('(');
             name = name.substring(i, j).trim();
         }
 
@@ -23,16 +24,16 @@ eel = {
     /** _py_functions **/
     /** _start_geometry **/
 
-    _guid: ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-        ),
+    _guid: ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    ),
 
     _exposed_functions: {},
 
     _mock_queue: [],
 
     _mock_py_functions: function() {
-        for(let i = 0; i < eel._py_functions.length; i++) {
+        for (let i = 0; i < eel._py_functions.length; i++) {
             let name = eel._py_functions[i];
             eel[name] = function() {
                 let call_object = eel._call_object(name, arguments);
@@ -57,12 +58,12 @@ eel = {
 
     _call_object: function(name, args) {
         let arg_array = [];
-        for(let i = 0; i < args.length; i++){
+        for (let i = 0; i < args.length; i++) {
             arg_array.push(args[i]);
         }
 
         let call_id = (eel._call_number += 1) + Math.random();
-        return {'call': call_id, 'name': name, 'args': arg_array};
+        return { 'call': call_id, 'name': name, 'args': arg_array };
     },
 
     _sleep: function(ms) {
@@ -75,11 +76,11 @@ eel = {
 
     _call_return: function(call) {
         return function(callback = null) {
-            if(callback != null) {
-                eel._call_return_callbacks[call.call] = {resolve: callback};
+            if (callback != null) {
+                eel._call_return_callbacks[call.call] = { resolve: callback };
             } else {
                 return new Promise(function(resolve, reject) {
-                    eel._call_return_callbacks[call.call] = {resolve: resolve, reject: reject};
+                    eel._call_return_callbacks[call.call] = { resolve: resolve, reject: reject };
                 });
             }
         }
@@ -89,16 +90,16 @@ eel = {
         let size = eel._start_geometry['default'].size;
         let position = eel._start_geometry['default'].position;
 
-        if(page in eel._start_geometry.pages) {
+        if (page in eel._start_geometry.pages) {
             size = eel._start_geometry.pages[page].size;
             position = eel._start_geometry.pages[page].position;
         }
 
-        if(size != null){
+        if (size != null) {
             window.resizeTo(size[0], size[1]);
         }
 
-        if(position != null){
+        if (position != null) {
             window.moveTo(position[0], position[1]);
         }
     },
@@ -115,42 +116,42 @@ eel = {
             eel._websocket = new WebSocket(websocket_addr);
 
             eel._websocket.onopen = function() {
-                for(let i = 0; i < eel._py_functions.length; i++){
+                for (let i = 0; i < eel._py_functions.length; i++) {
                     let py_function = eel._py_functions[i];
                     eel._import_py_function(py_function);
                 }
 
-                while(eel._mock_queue.length > 0) {
+                while (eel._mock_queue.length > 0) {
                     let call = eel._mock_queue.shift();
                     eel._websocket.send(eel._toJSON(call));
                 }
             };
 
-            eel._websocket.onmessage = function (e) {
+            eel._websocket.onmessage = function(e) {
                 let message = JSON.parse(e.data);
-                if(message.hasOwnProperty('call') ) {
+                if (message.hasOwnProperty('call')) {
                     // Python making a function call into us
-                    if(message.name in eel._exposed_functions) {
+                    if (message.name in eel._exposed_functions) {
                         try {
                             let return_val = eel._exposed_functions[message.name](...message.args);
-                            eel._websocket.send(eel._toJSON({'return': message.call, 'status':'ok', 'value': return_val}));
-                        } catch(err) {
+                            eel._websocket.send(eel._toJSON({ 'return': message.call, 'status': 'ok', 'value': return_val }));
+                        } catch (err) {
                             debugger
-                            eel._websocket.send(eel._toJSON(
-                                {'return': message.call,
-                                'status':'error',
+                            eel._websocket.send(eel._toJSON({
+                                'return': message.call,
+                                'status': 'error',
                                 'error': err.message,
-                                'stack': err.stack}));
+                                'stack': err.stack
+                            }));
                         }
                     }
-                } else if(message.hasOwnProperty('return')) {
+                } else if (message.hasOwnProperty('return')) {
                     // Python returning a value to us
-                    if(message['return'] in eel._call_return_callbacks) {
-                        if(message['status']==='ok'){
+                    if (message['return'] in eel._call_return_callbacks) {
+                        if (message['status'] === 'ok') {
                             eel._call_return_callbacks[message['return']].resolve(message.value);
-                        }
-                        else if(message['status']==='error' &&  eel._call_return_callbacks[message['return']].reject) {
-                                eel._call_return_callbacks[message['return']].reject(message['error']);
+                        } else if (message['status'] === 'error' && eel._call_return_callbacks[message['return']].reject) {
+                            eel._call_return_callbacks[message['return']].reject(message['error']);
                         }
                     }
                 } else {
@@ -164,7 +165,7 @@ eel = {
 
 eel._init();
 
-if(typeof require !== 'undefined'){
+if (typeof require !== 'undefined') {
     // Avoid name collisions when using Electron, so jQuery etc work normally
     window.nodeRequire = require;
     delete window.require;
